@@ -8,6 +8,36 @@ import java.util.Map;
 
 public final class Klingon implements SymbolSet {
 
+
+    public static boolean isLetterCorG(String letter) {
+        switch (letter.toUpperCase()) {
+            case "C":
+                return true;
+            case "G":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isLetterNG(String char1, String char2) {
+        switch ((char1 + char2).toUpperCase()) {
+            case "NG":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isLetterTLH(String char1, String char2, String char3) {
+        switch ((char1 + char2 + char3).toUpperCase()) {
+            case "TLH":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private final Map<String, String> conversionTable;
 
     public Klingon() {
@@ -59,8 +89,6 @@ public final class Klingon implements SymbolSet {
         transformationTable.put(",", "0xF8FD");
         transformationTable.put(".", "0xF8FE");
         transformationTable.put(" ", "0x0020");
-
         return transformationTable;
-
     }
 }
