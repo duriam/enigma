@@ -1,15 +1,15 @@
 package com.challenge.enigma.utilities;
 
-import com.challenge.enigma.models.Character;
-import com.challenge.enigma.models.CharacterList;
-import com.challenge.enigma.models.CharacterRoot;
-import com.challenge.enigma.models.CharacterSpecies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import com.challenge.enigma.models.Character;
+import com.challenge.enigma.models.CharacterList;
+import com.challenge.enigma.models.CharacterRoot;
+import com.challenge.enigma.models.CharacterSpecies;
 
 @Service
 public class SpeciesAPIUtility {
@@ -30,15 +30,12 @@ public class SpeciesAPIUtility {
     }
 
     public String getSpecies(CharacterList characterList) {
-
         String species = "";
         boolean isSpeciesExist = false;
-
         Character character;
+        
         for (Character characterBuffer : characterList.getCharacters()) {
-
             character = getCharacterByUID(characterBuffer.getUid());
-
             for (CharacterSpecies characterSpecies
                     : character.getCharacterSpecies()) {
                 if (characterSpecies.getName() != null

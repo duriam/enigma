@@ -1,7 +1,7 @@
 package com.challenge.enigma.symbolset;
 
-import com.challenge.enigma.exceptions.IllegalSymbolException;
 import org.springframework.stereotype.Component;
+import com.challenge.enigma.exceptions.IllegalSymbolException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

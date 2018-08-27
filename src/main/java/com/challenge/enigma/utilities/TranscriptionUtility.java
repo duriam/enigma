@@ -1,9 +1,9 @@
 package com.challenge.enigma.utilities;
 
+import org.springframework.stereotype.Service;
 import com.challenge.enigma.symbolset.SymbolSet;
 import com.challenge.enigma.exceptions.SymbolSetNotExistException;
 import com.challenge.enigma.exceptions.IllegalSymbolException;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
