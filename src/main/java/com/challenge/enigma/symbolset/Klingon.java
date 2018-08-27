@@ -1,13 +1,13 @@
 package com.challenge.enigma.symbolset;
 
-developeimport java.util.HashMap;
+import com.challenge.enigma.exceptions.IllegalSymbolException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 
 public final class Klingon implements SymbolSet {
-
 
     public static boolean isLetterCorG(String letter) {
         switch (letter.toUpperCase()) {
@@ -42,6 +42,50 @@ public final class Klingon implements SymbolSet {
 
     public Klingon() {
         this.conversionTable = loadSymbolSet();
+    }
+
+    @Override
+    public List<String> transcribe(String name) throws IllegalSymbolException {
+        LinkedList<String> klingonEquivalent = new LinkedList<>();
+
+        StringBuilder characterName = new StringBuilder(name);
+        String unicode;
+        String symbol;
+        while (characterName.length() > 0) {
+            symbol = String.valueOf(characterName.charAt(0));
+            characterName.deleteCharAt(0);
+
+            if (isLetterCorG(symbol)
+                    || ((characterName.length() > 0) // out of bounds check
+                    && isLetterNG(symbol,
+                            String.valueOf(characterName.charAt(0))))) {
+                symbol = symbol + characterName.charAt(0);
+                characterName.deleteCharAt(0);
+
+            } else if ((characterName.length() > 1) // out of bounds check
+                    && (isLetterTLH(symbol,
+                            String.valueOf(characterName.charAt(0)),
+                            String.valueOf(characterName.charAt(1))))) {
+                symbol = symbol 
+                        + characterName.charAt(0)
+                        + characterName.charAt(1);
+                characterName.deleteCharAt(0);
+                characterName.deleteCharAt(0);
+            }
+
+            if (!symbol.equals("q")) {
+                symbol = symbol.toUpperCase();
+            }
+
+            unicode = conversionTable.get(symbol);
+
+            if (unicode != null) {
+                klingonEquivalent.add(unicode);
+            } else {
+                throw new IllegalSymbolException();
+            }
+        }
+        return klingonEquivalent;
     }
 
     @Override
@@ -89,6 +133,9 @@ public final class Klingon implements SymbolSet {
         transformationTable.put(",", "0xF8FD");
         transformationTable.put(".", "0xF8FE");
         transformationTable.put(" ", "0x0020");
+
         return transformationTable;
+
     }
 }
+
