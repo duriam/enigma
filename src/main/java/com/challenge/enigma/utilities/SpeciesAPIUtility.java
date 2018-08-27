@@ -13,14 +13,15 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class SpeciesAPIUtility {
+
     @Autowired
     private RestTemplate rest;
     private final String URL = "http://stapi.co/api/v1/rest/character";
 
     public CharacterList getCharacterList(String characterName) {
         CharacterList characterList;
-        String requestParameters = "title=" + characterName + 
-                                   "&name=" + characterName;
+        String requestParameters = "title=" + characterName
+                + "&name=" + characterName;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> request = new HttpEntity<>(requestParameters, headers);
@@ -32,12 +33,14 @@ public class SpeciesAPIUtility {
 
         String species = "";
         boolean isSpeciesExist = false;
+
         Character character;
-        
         for (Character characterBuffer : characterList.getCharacters()) {
+
             character = getCharacterByUID(characterBuffer.getUid());
-            for (CharacterSpecies characterSpecies : 
-                    character.getCharacterSpecies()) {
+
+            for (CharacterSpecies characterSpecies
+                    : character.getCharacterSpecies()) {
                 if (characterSpecies.getName() != null
                         && !characterSpecies.getName().isEmpty()) {
                     species = characterSpecies.getName();
@@ -50,12 +53,14 @@ public class SpeciesAPIUtility {
             }
         }
         return species;
+
     }
 
     private Character getCharacterByUID(String uid) {
         String uidRequest = "uid=" + uid;
         CharacterRoot characterRoot = this.rest.getForObject(this.URL + "?"
                 + uidRequest, CharacterRoot.class);
+
         if (characterRoot != null) {
             return characterRoot.getCharacter();
         }

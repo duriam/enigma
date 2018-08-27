@@ -1,42 +1,14 @@
 package com.challenge.enigma.symbolset;
 
 import com.challenge.enigma.exceptions.IllegalSymbolException;
+import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
+@Component
 public final class Klingon implements SymbolSet {
-
-    public static boolean isLetterCorG(String letter) {
-        switch (letter.toUpperCase()) {
-            case "C":
-                return true;
-            case "G":
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public static boolean isLetterNG(String char1, String char2) {
-        switch ((char1 + char2).toUpperCase()) {
-            case "NG":
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public static boolean isLetterTLH(String char1, String char2, String char3) {
-        switch ((char1 + char2 + char3).toUpperCase()) {
-            case "TLH":
-                return true;
-            default:
-                return false;
-        }
-    }
 
     private final Map<String, String> conversionTable;
 
@@ -66,7 +38,7 @@ public final class Klingon implements SymbolSet {
                     && (isLetterTLH(symbol,
                             String.valueOf(characterName.charAt(0)),
                             String.valueOf(characterName.charAt(1))))) {
-                symbol = symbol 
+                symbol = symbol
                         + characterName.charAt(0)
                         + characterName.charAt(1);
                 characterName.deleteCharAt(0);
@@ -137,5 +109,33 @@ public final class Klingon implements SymbolSet {
         return transformationTable;
 
     }
-}
 
+    public static boolean isLetterCorG(String letter) {
+        switch (letter.toUpperCase()) {
+            case "C":
+                return true;
+            case "G":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isLetterNG(String char1, String char2) {
+        switch ((char1 + char2).toUpperCase()) {
+            case "NG":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isLetterTLH(String char1, String char2, String char3) {
+        switch ((char1 + char2 + char3).toUpperCase()) {
+            case "TLH":
+                return true;
+            default:
+                return false;
+        }
+    }
+}
