@@ -1,0 +1,4 @@
+#!/bin/bash
+
+characterName="$@"
+java -jar target/enigma-0.01.jar "$characterName"

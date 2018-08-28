@@ -33,7 +33,6 @@ public class SpeciesAPIUtility {
         String species = "";
         boolean isSpeciesExist = false;
         Character character;
-        
         for (Character characterBuffer : characterList.getCharacters()) {
             character = getCharacterByUID(characterBuffer.getUid());
             for (CharacterSpecies characterSpecies
@@ -50,14 +49,12 @@ public class SpeciesAPIUtility {
             }
         }
         return species;
-
     }
 
     private Character getCharacterByUID(String uid) {
         String uidRequest = "uid=" + uid;
         CharacterRoot characterRoot = this.rest.getForObject(this.URL + "?"
                 + uidRequest, CharacterRoot.class);
-
         if (characterRoot != null) {
             return characterRoot.getCharacter();
         }

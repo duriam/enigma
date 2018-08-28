@@ -105,9 +105,7 @@ public final class Klingon implements SymbolSet {
         transformationTable.put(",", "0xF8FD");
         transformationTable.put(".", "0xF8FE");
         transformationTable.put(" ", "0x0020");
-
         return transformationTable;
-
     }
 
     public static boolean isLetterCorG(String letter) {

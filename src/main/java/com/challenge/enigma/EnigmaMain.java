@@ -50,7 +50,6 @@ public class EnigmaMain implements CommandLineRunner {
             } catch (IllegalSymbolException e) {
                 System.out.println(argumentsPassedFromBash + " contains illegal characters, transcriber exiting.");
             }
-
         } else {
             System.out.println("Atleast one argument has to be passed, exiting...");
         }
