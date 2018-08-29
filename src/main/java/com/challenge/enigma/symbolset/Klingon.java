@@ -1,5 +1,6 @@
 package com.challenge.enigma.symbolset;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import com.challenge.enigma.exceptions.IllegalSymbolException;
 import java.util.HashMap;
@@ -20,35 +21,43 @@ public final class Klingon implements SymbolSet {
     public List<String> transcribe(String name) throws IllegalSymbolException {
         LinkedList<String> klingonEquivalent = new LinkedList<>();
 
+        // Used Mutable string implementation in order to conserve resources.
+        // As the bulk of the process is going to be done on characterName
         StringBuilder characterName = new StringBuilder(name);
         String unicode;
         String symbol;
+
+        // Stack(FIFO) popping algortihm for string 
         while (characterName.length() > 0) {
+            // Pop
             symbol = String.valueOf(characterName.charAt(0));
             characterName.deleteCharAt(0);
 
+            // If first letter (C/G) or First 2 letter NG
             if (isLetterCorG(symbol)
-                    || ((characterName.length() > 0) // out of bounds check
-                    && isLetterNG(symbol,
-                            String.valueOf(characterName.charAt(0))))) {
+                    || ((characterName.length() > 0) //Out of bound check for NG
+                    && isLetterNG(symbol, String.valueOf(characterName.charAt(0))))) {
+                // Pop and concatanate 
                 symbol = symbol + characterName.charAt(0);
                 characterName.deleteCharAt(0);
 
-            } else if ((characterName.length() > 1) // out of bounds check
-                    && (isLetterTLH(symbol,
+            } else if ((characterName.length() > 1) //Out of bound check for TLH
+                    && (isLetterTLH(symbol, // If symbol is TLH, pop twice
                             String.valueOf(characterName.charAt(0)),
                             String.valueOf(characterName.charAt(1))))) {
+                // And concatanate
                 symbol = symbol
                         + characterName.charAt(0)
                         + characterName.charAt(1);
                 characterName.deleteCharAt(0);
                 characterName.deleteCharAt(0);
             }
-
+            // Exept for lower case q;
+            // Turn all gathered symbols for this iteration uppercase
             if (!symbol.equals("q")) {
                 symbol = symbol.toUpperCase();
             }
-
+            
             unicode = conversionTable.get(symbol);
 
             if (unicode != null) {
@@ -61,6 +70,7 @@ public final class Klingon implements SymbolSet {
     }
 
     @Override
+    @Async
     public Map<String, String> loadSymbolSet() {
 
         Map<String, String> transformationTable;

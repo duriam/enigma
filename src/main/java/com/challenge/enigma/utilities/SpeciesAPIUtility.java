@@ -11,6 +11,10 @@ import com.challenge.enigma.models.CharacterList;
 import com.challenge.enigma.models.CharacterRoot;
 import com.challenge.enigma.models.CharacterSpecies;
 
+/**
+ *
+ * @author Riza DOGAN <rizadoogan@gmail.com>
+ */
 @Service
 public class SpeciesAPIUtility {
 
@@ -18,6 +22,12 @@ public class SpeciesAPIUtility {
     private RestTemplate rest;
     private final String URL = "http://stapi.co/api/v1/rest/character";
 
+    /**
+     * POST request utilizing stapi. Example of request body;
+     * "title=Uhura&name=Uhura"
+     * @param characterName
+     * @return characterList - baseline information for character
+     */
     public CharacterList getCharacterList(String characterName) {
         CharacterList characterList;
         String requestParameters = "title=" + characterName
@@ -29,6 +39,11 @@ public class SpeciesAPIUtility {
         return characterList;
     }
 
+    /**
+     * Parses JSON to get baseline characters from the first request
+     * @param characterList
+     * @return species type : String
+     */
     public String getSpecies(CharacterList characterList) {
         String species = "";
         boolean isSpeciesExist = false;
@@ -51,6 +66,12 @@ public class SpeciesAPIUtility {
         return species;
     }
 
+    /**
+     * GET Requests utilizing stapi. stapi returns detailed information on the 
+     * character via UID
+     * @param uid
+     * @return a new Character - Detailed information on character from stapi
+     */
     private Character getCharacterByUID(String uid) {
         String uidRequest = "uid=" + uid;
         CharacterRoot characterRoot = this.rest.getForObject(this.URL + "?"
