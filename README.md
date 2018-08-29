@@ -57,7 +57,7 @@ Kaalbahad contains illegal characters, program exiting...
 
 ### The species is not found
 
-This command has a name translatable, but the species was not found.
+This command has a translatable name, but the species was not found.
 
 ```bash
 $ ./transcribe Chatlhng
